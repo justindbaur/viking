@@ -182,7 +182,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\shared\ClassLibrary1\Viking.Common.csproj">
+    <ProjectReference Include="..\..\shared\Viking.Common\Viking.Common.csproj">
       <Project>{60f51785-1b71-4931-825c-fadf9b635d94}</Project>
       <Name>Viking.Common</Name>
     </ProjectReference>
