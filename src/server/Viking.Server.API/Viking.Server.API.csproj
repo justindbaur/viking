@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\shared\ClassLibrary2\Viking.Contexts.csproj" />
+    <ProjectReference Include="..\..\shared\Viking.Contexts\Viking.Contexts.csproj" />
   </ItemGroup>
 
 

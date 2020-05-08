@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Viking.Common;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -19,9 +20,9 @@ namespace Viking.Client.App.Dialogs
 {
     public sealed partial class BugReportDialog : ContentDialog
     {
-        public Common.BugReport Bug { get; }
+        public BugReport Bug { get; }
 
-        public BugReportDialog(Common.BugReport bugReport)
+        public BugReportDialog(BugReport bugReport)
         {
             this.InitializeComponent();
 

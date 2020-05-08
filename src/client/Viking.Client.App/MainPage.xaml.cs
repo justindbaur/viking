@@ -55,7 +55,7 @@ namespace Viking.Client.App
             else
             {
                 // Create Bug Report dialog
-                await DisplayBugReport(new Common.BugReport { Message = "Navigation View is not setup properly." });
+                await DisplayBugReport(new BugReport { Message = "Navigation View is not setup properly." });
             }
         }
 
