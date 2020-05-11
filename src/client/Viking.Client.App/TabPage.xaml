@@ -7,18 +7,27 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <controls:TabView x:Name="MainTabView" 
-                      AddTabButtonClick="MainTabView_AddTabButtonClick"
-                      TabCloseRequested="MainTabView_TabCloseRequested"
-                      Loaded="MainTabView_Loaded"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Stretch">
-        <controls:TabView.TabStripHeader>
-            <Grid x:Name="ShellTitlebarInset" Background="Transparent" />
-        </controls:TabView.TabStripHeader>
-        <controls:TabView.TabStripFooter >
-            <Grid x:Name="CustomDragRegion" Background="Transparent" />
-        </controls:TabView.TabStripFooter>
-    </controls:TabView>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <controls:TabView x:Name="MainTabView" 
+                          VerticalAlignment="Stretch"
+                          AddTabButtonClick="MainTabView_AddTabButtonClick"
+                          TabCloseRequested="MainTabView_TabCloseRequested"
+                          AllowDropTabs="True"
+                          CanDragTabs="True"
+                          CanReorderTabs="True"
+                          Loaded="MainTabView_Loaded"
+                          TabDroppedOutside="MainTabView_TabDroppedOutside"
+                          TabStripDragOver="MainTabView_TabStripDragOver"
+                          TabStripDrop="MainTabView_TabStripDrop"
+                          TabDragStarting="MainTabView_TabDragStarting"
+                          TabItemsChanged="MainTabView_TabItemsChanged"
+                          Background="Transparent" >
+            <controls:TabView.TabStripHeader>
+                <Grid x:Name="ShellTitlebarInset" Background="Transparent" />
+            </controls:TabView.TabStripHeader>
+            <controls:TabView.TabStripFooter >
+                <Grid x:Name="CustomDragRegion" Background="Transparent" />
+            </controls:TabView.TabStripFooter>
+        </controls:TabView>
+    </Grid>
 </Page>

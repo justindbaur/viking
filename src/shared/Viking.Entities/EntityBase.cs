@@ -6,6 +6,6 @@ namespace Viking.Entities
 {
     public class EntityBase
     {
-        public Guid Id { get; set; }
+        public Guid RowId { get; set; }
     }
 }

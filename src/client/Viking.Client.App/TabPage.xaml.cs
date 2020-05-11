@@ -84,5 +84,30 @@ namespace Viking.Client.App
 
             return tabViewItem;
         }
+
+        private void MainTabView_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
+        {
+
+        }
+
+        private void MainTabView_TabStripDragOver(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void MainTabView_TabStripDrop(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void MainTabView_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
+        {
+
+        }
+
+        private void MainTabView_TabItemsChanged(TabView sender, IVectorChangedEventArgs args)
+        {
+
+        }
     }
 }

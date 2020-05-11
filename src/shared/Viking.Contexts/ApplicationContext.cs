@@ -13,6 +13,7 @@ namespace Viking.Contexts
         }
 
         public DbSet<Interaction> Interactions { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

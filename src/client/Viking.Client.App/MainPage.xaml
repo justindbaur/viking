@@ -4,28 +4,42 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Viking.Client.App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:views="using:Viking.Client.App.Views"
+    xmlns:c="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView x:Name="AppNavigation"
+        <c:NavigationView x:Name="AppNavigation"
                         IsSettingsVisible="True"
                         IsBackButtonVisible="Auto"
                         IsBackEnabled="False"
                         SelectionChanged="AppNavigation_SelectionChanged"
                         PaneTitle="Navigation"
-                        PaneDisplayMode="Left"
+                        PaneDisplayMode="Top"
                         ExpandedModeThresholdWidth="500"
                         SelectionFollowsFocus="Disabled"
                         IsTabStop="False">
-            <NavigationView.MenuItems>
-                <NavigationViewItem Content="Home" Tag="Home" x:Name="Home" Icon="Home" />
-            </NavigationView.MenuItems>
-            <NavigationView.AutoSuggestBox>
+            <c:NavigationView.MenuItems>
+                <c:NavigationViewItem Content="Home" Tag="Home" x:Name="Home" Icon="Home" />
+                <c:NavigationViewItem Content="AR" Tag="AR" Icon="Document">
+                    <c:NavigationViewItem.MenuItems>
+                        <c:NavigationViewItem Content="Purchase Order" Tag="PurchaseOrder" />
+                    </c:NavigationViewItem.MenuItems>
+                </c:NavigationViewItem>
+                <c:NavigationViewItem Content="Config" Tag="Config">
+                    <c:NavigationViewItem.MenuItems>
+                        <c:NavigationViewItem Content="Company" Tag="CompanyConfig" />
+                    </c:NavigationViewItem.MenuItems>
+                </c:NavigationViewItem>
+            </c:NavigationView.MenuItems>
+            <c:NavigationView.AutoSuggestBox>
                 <AutoSuggestBox QueryIcon="Find" AutomationProperties.Name="Search" />
-            </NavigationView.AutoSuggestBox>
-            <Frame x:Name="contentFrame" />
-        </NavigationView>
+            </c:NavigationView.AutoSuggestBox>
+            <Frame x:Name="contentFrame">
+                <views:HomePage />
+            </Frame>
+        </c:NavigationView>
     </Grid>
 </Page>

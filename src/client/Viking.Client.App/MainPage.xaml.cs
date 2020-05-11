@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Viking.Client.App.Dialogs;
 using Viking.Client.App.Views;
+using Viking.Client.App.Views.Config;
 using Viking.Common;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -29,9 +30,16 @@ namespace Viking.Client.App
         public MainPage()
         {
             this.InitializeComponent();
+
         }
 
-        private async void AppNavigation_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        public async Task DisplayBugReport(BugReport bugReport)
+        {
+            var bugReportDialog = new BugReportDialog(bugReport);
+            await bugReportDialog.ShowAsync();
+        }
+
+        private async void AppNavigation_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
@@ -39,9 +47,11 @@ namespace Viking.Client.App
                 contentFrame.Navigate(typeof(SettingsPage));
                 return;
             }
-            else if (args.SelectedItem is NavigationViewItem navItem)
+            else if (args.SelectedItem is Microsoft.UI.Xaml.Controls.NavigationViewItem navItem)
             {
-                if (navItem.Tag.ToString() == "Home")
+                string tag = navItem.Tag.ToString();
+
+                if (tag == "Home")
                 {
                     // Go home
                     contentFrame.Navigate(typeof(HomePage));
@@ -49,7 +59,18 @@ namespace Viking.Client.App
                 else
                 {
                     // Do internal lookup
-
+                    // TODO: Do something more scalable than this
+                    switch (tag)
+                    {
+                        case "PurchaseOrder":
+                            contentFrame.Navigate(typeof(PurchaseOrderPage));
+                            break;
+                        case "CompanyConfig":
+                            contentFrame.Navigate(typeof(CompanyConfigPage));
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             else
@@ -57,12 +78,6 @@ namespace Viking.Client.App
                 // Create Bug Report dialog
                 await DisplayBugReport(new BugReport { Message = "Navigation View is not setup properly." });
             }
-        }
-
-        public async Task DisplayBugReport(BugReport bugReport)
-        {
-            var bugReportDialog = new BugReportDialog(bugReport);
-            await bugReportDialog.ShowAsync();
         }
     }
 }

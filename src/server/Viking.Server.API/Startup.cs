@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,7 +31,10 @@ namespace Viking.Server.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.EnableEndpointRouting = false;
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -76,10 +80,16 @@ namespace Viking.Server.API
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(options =>
             {
-                endpoints.MapControllers();
+                options.Select().OrderBy().Filter().Expand().Count();
+                //options.MapODataServiceRoute("api", "api", default(IEdmModel));
             });
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
         }
     }
 }
