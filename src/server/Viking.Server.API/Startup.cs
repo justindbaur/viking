@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Viking.Contexts;
+using Viking.Server.API.Common;
 
 namespace Viking.Server.API
 {
@@ -40,6 +42,8 @@ namespace Viking.Server.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+
+            services.AddOData();
 
             services.AddDbContext<ApplicationContext>(options =>
             {
@@ -78,18 +82,16 @@ namespace Viking.Server.API
 
             app.UseRouting();
 
+            //app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseMvc(options =>
-            {
-                options.Select().OrderBy().Filter().Expand().Count();
-                //options.MapODataServiceRoute("api", "api", default(IEdmModel));
-            });
+            var odataBuilder = app.ConfigureOData();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.Select().Filter().OrderBy().Expand().Count().MaxTop(null);
+                endpoints.MapODataRoute("ODataRoute", "odata", odataBuilder.GetEdmModel());
+            });
         }
     }
 }

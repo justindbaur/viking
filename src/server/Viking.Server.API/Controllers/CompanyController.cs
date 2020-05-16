@@ -2,40 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Viking.Contexts;
 using Viking.Entities;
 using Viking.Services;
 
 namespace Viking.Server.API.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
     public class CompanyController : ControllerBase
     {
-        private readonly ApplicationService service;
+        private readonly ApplicationContext context;
 
-        public CompanyController(ApplicationService service)
+        public CompanyController(ApplicationContext context)
         {
-            this.service = service;
+            this.context = context;
         }
 
         [HttpGet("{name}")]
-        public Task<IActionResult> Get(string name)
+        public async Task<IActionResult> Get(string name)
         {
-            throw new NotImplementedException();
+            var company = await context.Companies.FindAsync(name);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(company);
         }
 
         [HttpGet]
-        public Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            throw new NotImplementedException();
-        }
-
-        [HttpPost]
-        public Task<IActionResult> Create(Company company)
-        {
-            throw new NotImplementedException();
+            return Ok(await context.Companies.ToListAsync());
         }
     }
 }

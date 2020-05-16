@@ -19,8 +19,22 @@ namespace Viking.Contexts
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Company>()
+                .DefaultConfigure(c => new { c.Name });
+
+            builder.Entity<PurchaseOrder>()
+                .DefaultConfigure(p => new { p.Company, p.PONum })
+                .HasMany(e => e.PurchaseOrderLines)
+                .WithOne(e => e.PurchaseOrder);
+
+            builder.Entity<PurchaseOrderLine>()
+                .DefaultConfigure(p => new { p.Company, p.PONum, p.LineNum })
+                .HasOne(e => e.PurchaseOrder)
+                .WithMany(e => e.PurchaseOrderLines);
+
             builder.Entity<Interaction>()
-                .ToTable(nameof(Interaction));
+                .DefaultConfigure();
+                
 
         }
     }

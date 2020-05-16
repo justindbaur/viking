@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viking.Entities", "shared\V
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viking.Contexts", "shared\Viking.Contexts\Viking.Contexts.csproj", "{28FF975C-C8EA-486A-A483-170FF07483D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viking.Services", "shared\Viking.Services\Viking.Services.csproj", "{FF4184E4-DA12-4A76-90B6-3C0F28092B27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viking.Services", "shared\Viking.Services\Viking.Services.csproj", "{FF4184E4-DA12-4A76-90B6-3C0F28092B27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
