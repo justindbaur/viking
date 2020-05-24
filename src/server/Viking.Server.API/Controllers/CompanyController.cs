@@ -24,7 +24,7 @@ namespace Viking.Server.API.Controllers
             this.context = context;
         }
 
-        [HttpGet("{name}")]
+        [HttpGet("({name})")]
         public async Task<IActionResult> Get(string name)
         {
             var company = await context.Companies.FindAsync(name);

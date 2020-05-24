@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Viking.Client.App.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,13 +23,17 @@ namespace Viking.Client.App.Views
     /// </summary>
     public sealed partial class PurchaseOrderPage : Page
     {
-        public string PONum { get; set; }
+        public PurchaseOrderViewModel VM { get; set; }
 
         public PurchaseOrderPage()
         {
             this.InitializeComponent();
+        }
 
-            
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            // TODO: Do stuff
+            VM = new PurchaseOrderViewModel();
         }
     }
 }

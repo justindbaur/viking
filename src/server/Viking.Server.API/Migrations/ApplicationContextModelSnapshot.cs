@@ -288,8 +288,14 @@ namespace Viking.Server.API.Migrations
                     b.Property<DateTime?>("LastRevisedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("RowId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Company", "PONum");
 
@@ -321,20 +327,12 @@ namespace Viking.Server.API.Migrations
                     b.Property<DateTime?>("LastRevisedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PurchaseOrderCompany")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PurchaseOrderPONum")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<Guid>("RowId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Company", "PONum", "LineNum");
 
                     b.HasAlternateKey("RowId");
-
-                    b.HasIndex("PurchaseOrderCompany", "PurchaseOrderPONum");
 
                     b.ToTable("PurchaseOrderLine");
                 });
@@ -394,7 +392,9 @@ namespace Viking.Server.API.Migrations
                 {
                     b.HasOne("Viking.Entities.PurchaseOrder", "PurchaseOrder")
                         .WithMany("PurchaseOrderLines")
-                        .HasForeignKey("PurchaseOrderCompany", "PurchaseOrderPONum");
+                        .HasForeignKey("Company", "PONum")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

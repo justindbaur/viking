@@ -15,7 +15,7 @@ namespace Viking.Contexts
             where T : AuditableEntity
         {
             // Rename table to the types name
-            builder.ToTable(typeof(T).Name.ToLower());
+            builder.ToTable(typeof(T).Name);
 
             // Configure the keys they passed in
             builder.HasKey(keyExpression);

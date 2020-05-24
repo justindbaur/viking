@@ -15,7 +15,8 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <StackPanel Margin="10,10,10,10">
-            <SearchBox QueryText="{x:Bind PONum}"/>
+            <SearchBox QueryText="{x:Bind VM.PONum}"/>
+            <DatePicker x:Name="OrderDate" Date="{x:Bind VM.OrderDate}" />
         </StackPanel>
         <StackPanel Grid.Column="1">
             

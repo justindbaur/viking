@@ -43,7 +43,7 @@ namespace Viking.Server.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-            services.AddOData();
+            //services.AddOData();
 
             services.AddDbContext<ApplicationContext>(options =>
             {
@@ -85,13 +85,13 @@ namespace Viking.Server.API
             //app.UseAuthentication();
             app.UseAuthorization();
 
-            var odataBuilder = app.ConfigureOData();
+            //var odataBuilder = app.ConfigureOData();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.Select().Filter().OrderBy().Expand().Count().MaxTop(null);
-                endpoints.MapODataRoute("ODataRoute", "odata", odataBuilder.GetEdmModel());
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.Select().Filter().OrderBy().Expand().Count().MaxTop(null);
+            //    endpoints.MapODataRoute("ODataRoute", "odata", odataBuilder.GetEdmModel());
+            //});
         }
     }
 }

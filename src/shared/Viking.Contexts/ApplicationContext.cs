@@ -14,6 +14,8 @@ namespace Viking.Contexts
 
         public DbSet<Interaction> Interactions { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -23,19 +25,16 @@ namespace Viking.Contexts
                 .DefaultConfigure(c => new { c.Name });
 
             builder.Entity<PurchaseOrder>()
-                .DefaultConfigure(p => new { p.Company, p.PONum })
-                .HasMany(e => e.PurchaseOrderLines)
-                .WithOne(e => e.PurchaseOrder);
+                .DefaultConfigure(p => new { p.Company, p.PONum });
 
             builder.Entity<PurchaseOrderLine>()
                 .DefaultConfigure(p => new { p.Company, p.PONum, p.LineNum })
-                .HasOne(e => e.PurchaseOrder)
-                .WithMany(e => e.PurchaseOrderLines);
+                .HasOne(p => p.PurchaseOrder)
+                .WithMany(p => p.PurchaseOrderLines)
+                .HasForeignKey(p => new { p.Company, p.PONum });
 
             builder.Entity<Interaction>()
                 .DefaultConfigure();
-                
-
         }
     }
 }

@@ -16,5 +16,14 @@ namespace Viking.Client.App.ViewModels
 			get => poNum;
 			set => Set(ref poNum, value);
 		}
+
+
+		private DateTimeOffset orderDate = new DateTimeOffset(DateTime.Now);
+
+		public DateTimeOffset OrderDate
+		{
+			get => orderDate;
+			set => Set(ref orderDate, value);
+		}
     }
 }

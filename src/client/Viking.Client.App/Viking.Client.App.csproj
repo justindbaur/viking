@@ -122,6 +122,7 @@
     <Compile Include="Common\Item.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
+    <Compile Include="ViewModels\PurchaseOrderViewModel.cs" />
     <Compile Include="Views\Config\CompanyConfigPage.xaml.cs">
       <DependentUpon>CompanyConfigPage.xaml</DependentUpon>
     </Compile>

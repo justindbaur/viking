@@ -1,24 +1,144 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Viking.Services;
+using Viking.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Viking.Server.API.Common
 {
-    public class CustomControllerBase<T> : ControllerBase
+    [Route("api/[controller]")]
+    public class CustomControllerBase<Entity, CreateModel, SaveModel> : ControllerBase
+        where Entity : class
     {
-        public CustomControllerBase(ApplicationService service)
+        public ApplicationContext Context { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        public CustomControllerBase(ApplicationContext context)
         {
-            Service = service;
+            Context = context;
         }
 
-        public ApplicationService Service { get; }
 
-        public Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            throw new NotImplementedException();
+            return Ok(await Context.Set<Entity>().ToListAsync());
         }
+
+        #region Helper Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public CreatedResult Created([ActionResultObjectValue] object value, params object[] keys)
+        {
+            return base.Created($"api/{typeof(Entity).Name.ToLower()}/({string.Join(',', keys)})", value);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        protected async Task<Entity> CreateItem(CreateModel entity)
+        {
+
+
+            var result = await Context.AddAsync(entity);
+
+            await Context.SaveChangesAsync();
+
+            return result.Entity;
+        }
+
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        protected async Task<IActionResult> FindItem(object[] keys)
+        {
+            var item = await Context.FindAsync<Entity>(keys);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(item);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        protected async Task<IActionResult> PatchItem(object[] keys, SaveModel entity)
+        {
+            try
+            {
+                var item = await Context.FindAsync<Entity>(keys);
+
+                if (item == null)
+                {
+                    return NotFound();
+                }
+
+                // TODO: Do patch
+
+
+
+
+                await Context.SaveChangesAsync();
+
+                // Return patched item
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        protected async Task<IActionResult> DeleteItem(object[] keys)
+        {
+            try
+            {
+                var item = await Context.FindAsync<Entity>(keys);
+
+                if (item == null)
+                {
+                    return NotFound();
+                }
+
+                var result = Context.Remove(item);
+
+                if (result.State != EntityState.Deleted)
+                {
+                    return BadRequest("Error deleting the item.");
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        #endregion
     }
 }

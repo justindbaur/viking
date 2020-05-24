@@ -10,8 +10,8 @@ using Viking.Contexts;
 namespace Viking.Server.API.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200507224928_Initial")]
-    partial class Initial
+    [Migration("20200517220543_Intitial")]
+    partial class Intitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -217,9 +217,36 @@ namespace Viking.Server.API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Viking.Entities.Company", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastRevisedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastRevisedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Name");
+
+                    b.HasAlternateKey("RowId");
+
+                    b.ToTable("Company");
+                });
+
             modelBuilder.Entity("Viking.Entities.Interaction", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("RowId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -238,9 +265,78 @@ namespace Viking.Server.API.Migrations
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("RowId");
 
                     b.ToTable("Interaction");
+                });
+
+            modelBuilder.Entity("Viking.Entities.PurchaseOrder", b =>
+                {
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PONum")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastRevisedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastRevisedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Company", "PONum");
+
+                    b.HasAlternateKey("RowId");
+
+                    b.ToTable("PurchaseOrder");
+                });
+
+            modelBuilder.Entity("Viking.Entities.PurchaseOrderLine", b =>
+                {
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PONum")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("LineNum")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastRevisedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastRevisedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Company", "PONum", "LineNum");
+
+                    b.HasAlternateKey("RowId");
+
+                    b.ToTable("PurchaseOrderLine");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -290,6 +386,15 @@ namespace Viking.Server.API.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Viking.Entities.PurchaseOrderLine", b =>
+                {
+                    b.HasOne("Viking.Entities.PurchaseOrder", "PurchaseOrder")
+                        .WithMany("PurchaseOrderLines")
+                        .HasForeignKey("Company", "PONum")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

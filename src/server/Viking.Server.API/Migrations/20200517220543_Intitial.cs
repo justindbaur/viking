@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Viking.Server.API.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Intitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,10 +47,27 @@ namespace Viking.Server.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Company",
+                columns: table => new
+                {
+                    Name = table.Column<string>(nullable: false),
+                    RowId = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedTime = table.Column<DateTime>(nullable: false),
+                    LastRevisedBy = table.Column<string>(nullable: true),
+                    LastRevisedTime = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Company", x => x.Name);
+                    table.UniqueConstraint("AK_Company_RowId", x => x.RowId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Interaction",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    RowId = table.Column<Guid>(nullable: false),
                     Time = table.Column<DateTime>(nullable: false),
                     Type = table.Column<long>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
@@ -59,7 +76,27 @@ namespace Viking.Server.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Interaction", x => x.Id);
+                    table.PrimaryKey("PK_Interaction", x => x.RowId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PurchaseOrder",
+                columns: table => new
+                {
+                    Company = table.Column<string>(nullable: false),
+                    PONum = table.Column<string>(nullable: false),
+                    RowId = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedTime = table.Column<DateTime>(nullable: false),
+                    LastRevisedBy = table.Column<string>(nullable: true),
+                    LastRevisedTime = table.Column<DateTime>(nullable: true),
+                    OrderDate = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseOrder", x => new { x.Company, x.PONum });
+                    table.UniqueConstraint("AK_PurchaseOrder_RowId", x => x.RowId);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,6 +205,31 @@ namespace Viking.Server.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PurchaseOrderLine",
+                columns: table => new
+                {
+                    Company = table.Column<string>(nullable: false),
+                    PONum = table.Column<string>(nullable: false),
+                    LineNum = table.Column<int>(nullable: false),
+                    RowId = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedTime = table.Column<DateTime>(nullable: false),
+                    LastRevisedBy = table.Column<string>(nullable: true),
+                    LastRevisedTime = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseOrderLine", x => new { x.Company, x.PONum, x.LineNum });
+                    table.UniqueConstraint("AK_PurchaseOrderLine_RowId", x => x.RowId);
+                    table.ForeignKey(
+                        name: "FK_PurchaseOrderLine_PurchaseOrder_Company_PONum",
+                        columns: x => new { x.Company, x.PONum },
+                        principalTable: "PurchaseOrder",
+                        principalColumns: new[] { "Company", "PONum" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -226,13 +288,22 @@ namespace Viking.Server.API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Company");
+
+            migrationBuilder.DropTable(
                 name: "Interaction");
+
+            migrationBuilder.DropTable(
+                name: "PurchaseOrderLine");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "PurchaseOrder");
         }
     }
 }
