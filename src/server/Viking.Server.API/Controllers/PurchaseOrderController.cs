@@ -41,14 +41,6 @@ namespace Viking.Server.API.Controllers
             return await PatchItem(new[] { company, poNum }, purchaseOrder);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(CreatePurchaseOrderModel purchaseOrder)
-        {
-            var createdItem = await CreateItem(purchaseOrder);
-
-            return Created(createdItem, createdItem.Company, createdItem.PONum);
-        }
-
         [HttpGet("({company},{poNum})/polines")]
         public async Task<IActionResult> GetPurchaseOrderLines(string company, string poNum)
         {

@@ -79,5 +79,10 @@ namespace Viking.Client.App
                 await DisplayBugReport(new BugReport { Message = "Navigation View is not setup properly." });
             }
         }
+
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+
+        }
     }
 }

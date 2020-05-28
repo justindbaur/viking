@@ -1,0 +1,21 @@
+﻿@page "/purchaseorder"
+@page "/purchaseorder({company},{poNum})"
+
+<h3>PurchaseOrder</h3>
+<LookupField TValue="string"></LookupField>
+
+@code {
+    [Parameter]
+    public string Company { get; set; }
+
+    [Parameter]
+    public string PONum { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+
+
+
+        return base.OnInitializedAsync();
+    }
+}

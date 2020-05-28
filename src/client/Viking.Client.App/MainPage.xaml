@@ -35,7 +35,7 @@
                 </c:NavigationViewItem>
             </c:NavigationView.MenuItems>
             <c:NavigationView.AutoSuggestBox>
-                <AutoSuggestBox QueryIcon="Find" AutomationProperties.Name="Search" />
+                <AutoSuggestBox QueryIcon="Find" AutomationProperties.Name="Search"  QuerySubmitted="AutoSuggestBox_QuerySubmitted"/>
             </c:NavigationView.AutoSuggestBox>
             <Frame x:Name="contentFrame">
                 <views:HomePage />

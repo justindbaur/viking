@@ -32,7 +32,7 @@ namespace Viking.Client.Services
             where TMessageImplementation : class, IMessageService
             where TBugReportImplementation : class, IBugReportService
         {
-            //
+            // TODO: Choose which service type would be best for each item, bug report will probably need user information
             serviceCollection.AddSingleton<IMessageService, TMessageImplementation>();
 
             serviceCollection.AddTransient<IBugReportService, TBugReportImplementation>();

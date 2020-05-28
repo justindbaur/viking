@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,22 +31,26 @@ namespace Viking.Services
         public async Task ExecuteAsync(string requestUri, object body)
         {
             // Do a POST at the given request uri with the object they gave serialized as the body
-            await client.PostAsync(requestUri, GetJsonContent(body));
+            await client.PostAsJsonAsync(requestUri, body);
         }
 
         public async Task ExecuteAsync(string requestUri, object body, CancellationToken cancellationToken)
         {
-            await client.PostAsync(requestUri, GetJsonContent(body), cancellationToken);
+            var response = await client.PostAsJsonAsync(requestUri, body, cancellationToken);
         }
 
-        private StringContent GetJsonContent(object content)
+        public async Task<T> GetAsync<T>(string requestUri)
         {
-            // Create a string writer to store the serialized string
-            var sw = new StringWriter();
-            // Use existing serializer with our rules to do the serialization
-            serializer.Serialize(sw, content);
-            // Return a JSON formatted StringContent with our content encoding and media type declaration
-            return new StringContent(sw.ToString(), Encoding.UTF8, "application/json");
+            try
+            {
+                var value = await client.GetFromJsonAsync<T>(requestUri);
+
+                return value;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         private async Task<T> HandleResponseAsync<T>(HttpResponseMessage response)

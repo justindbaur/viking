@@ -36,26 +36,9 @@ namespace Viking.Server.API.Common
         /// <param name="keys"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public CreatedResult Created([ActionResultObjectValue] object value, params object[] keys)
+        protected CreatedResult Created([ActionResultObjectValue] object value, params object[] keys)
         {
             return base.Created($"api/{typeof(Entity).Name.ToLower()}/({string.Join(',', keys)})", value);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        protected async Task<Entity> CreateItem(CreateModel entity)
-        {
-
-
-            var result = await Context.AddAsync(entity);
-
-            await Context.SaveChangesAsync();
-
-            return result.Entity;
         }
 
         

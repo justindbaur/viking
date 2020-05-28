@@ -1,0 +1,25 @@
+﻿@typeparam TValue
+<div class="input-group">
+    <input class="form-control" @attributes="Attributes" />
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" @onclick="Search_Click">
+            <span class="oi oi-magnifying-glass" style="vertical-align: text-top;"></span>
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> Attributes { get; set; }
+
+    [Parameter]
+    public TValue Value { get; set; }
+
+    public async Task Search_Click()
+    {
+        await Task.Run(() =>
+        {
+            System.Threading.Thread.Sleep(100);
+        });
+    }
+}

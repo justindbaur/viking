@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Viking.Contexts;
 using Viking.Entities;
-using Viking.Services;
 
 namespace Viking.Server.API.Controllers
 {
