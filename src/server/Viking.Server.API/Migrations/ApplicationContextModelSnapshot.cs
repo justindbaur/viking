@@ -242,6 +242,83 @@ namespace Viking.Server.API.Migrations
                     b.ToTable("Company");
                 });
 
+            modelBuilder.Entity("Viking.Entities.Filter", b =>
+                {
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TableName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastRevisedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastRevisedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Company", "TableName", "DisplayName");
+
+                    b.HasAlternateKey("RowId");
+
+                    b.ToTable("Filter");
+                });
+
+            modelBuilder.Entity("Viking.Entities.FilterDisplayColumn", b =>
+                {
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TableName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ColumnPath")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("OrderNum")
+                        .HasColumnType("int");
+
+                    b.HasKey("Company", "TableName", "DisplayName", "ColumnPath");
+
+                    b.ToTable("FilterDisplayColumn");
+                });
+
+            modelBuilder.Entity("Viking.Entities.FilterSortColumn", b =>
+                {
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TableName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ColumnPath")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsAscending")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Company", "TableName", "DisplayName", "ColumnPath");
+
+                    b.ToTable("FilterSortColumn");
+                });
+
             modelBuilder.Entity("Viking.Entities.Interaction", b =>
                 {
                     b.Property<Guid>("RowId")
@@ -384,6 +461,24 @@ namespace Viking.Server.API.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Viking.Entities.FilterDisplayColumn", b =>
+                {
+                    b.HasOne("Viking.Entities.Filter", "Filter")
+                        .WithMany("FilterDisplayColumns")
+                        .HasForeignKey("Company", "TableName", "DisplayName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Viking.Entities.FilterSortColumn", b =>
+                {
+                    b.HasOne("Viking.Entities.Filter", "Filter")
+                        .WithMany("FilterSortColumns")
+                        .HasForeignKey("Company", "TableName", "DisplayName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

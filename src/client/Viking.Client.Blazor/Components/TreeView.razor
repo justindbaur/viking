@@ -1,0 +1,73 @@
+﻿@typeparam TNode
+
+<div class="uic-tree @(Visible ? "" : "uic-tree--hidden")">
+    @foreach (var node in Nodes)
+    {
+        var nodeExpanded = ExpandedNodes.Contains(node);
+        var nodeSelected = node.Equals(SelectedNode);
+        var hasChildren = HasChildNodes(node);
+
+    <div>
+        @if (hasChildren)
+        {
+            <span class="uic-tree__icon" @onclick="@(() => OnToggleNode(node, !nodeExpanded))">
+                <i class="@(nodeExpanded ? "far fa-minus-square curosr-pointer" : "far fa-plus-square curosr-pointer")"></i>
+            </span>
+        }
+
+        <div class="uic-tree__title">
+            <span class="p-1 curosr-pointer @(nodeSelected ? "bg-primary text-white" : "")" @onclick="@(() => OnSelectNode(node))">
+                @TitleTemplate(node)
+            </span>
+        </div>
+
+        @if (hasChildren)
+        {
+            <TreeView Nodes="ChildSelector(node)"
+                  TitleTemplate="TitleTemplate"
+                  ChildSelector="ChildSelector"
+                  ExpandedNodes="ExpandedNodes"
+                  ExpandedNodesChanged="ExpandedNodesChanged"
+                  SelectedNode="SelectedNode"
+                  SelectedNodeChanged="SelectedNodeChanged"
+                  Visible="nodeExpanded"
+                  HasChildNodes="HasChildNodes" />
+        }
+    </div>
+    }
+</div>
+
+@code {
+
+    [Parameter] public IEnumerable<TNode> Nodes { get; set; }
+    [Parameter] public RenderFragment<TNode> TitleTemplate { get; set; }
+    [Parameter] public TNode SelectedNode { get; set; }
+    [Parameter] public EventCallback<TNode> SelectedNodeChanged { get; set; }
+    [Parameter] public Func<TNode, IEnumerable<TNode>> ChildSelector { get; set; }
+    [Parameter] public IList<TNode> ExpandedNodes { get; set; } = new List<TNode>();
+    [Parameter] public EventCallback<IList<TNode>> ExpandedNodesChanged { get; set; }
+    [Parameter] public Func<TNode, bool> HasChildNodes { get; set; } = node => true;
+    [Parameter] public bool Visible { get; set; }
+
+    private void OnToggleNode(TNode node, bool expand)
+    {
+        bool expanded = ExpandedNodes.Contains(node);
+
+        if (expanded && !expand)
+        {
+            ExpandedNodes.Remove(node);
+            ExpandedNodesChanged.InvokeAsync(ExpandedNodes);
+        }
+        else if (!expanded && expand)
+        {
+            ExpandedNodes.Add(node);
+            ExpandedNodesChanged.InvokeAsync(ExpandedNodes);
+        }
+    }
+
+    private void OnSelectNode(TNode node)
+    {
+        SelectedNode = node;
+        SelectedNodeChanged.InvokeAsync(node);
+    }
+}

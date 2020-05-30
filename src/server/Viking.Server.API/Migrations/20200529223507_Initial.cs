@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Viking.Server.API.Migrations
 {
-    public partial class Intitial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,6 +61,25 @@ namespace Viking.Server.API.Migrations
                 {
                     table.PrimaryKey("PK_Company", x => x.Name);
                     table.UniqueConstraint("AK_Company_RowId", x => x.RowId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Filter",
+                columns: table => new
+                {
+                    Company = table.Column<string>(nullable: false),
+                    TableName = table.Column<string>(nullable: false),
+                    DisplayName = table.Column<string>(nullable: false),
+                    RowId = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedTime = table.Column<DateTime>(nullable: false),
+                    LastRevisedBy = table.Column<string>(nullable: true),
+                    LastRevisedTime = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Filter", x => new { x.Company, x.TableName, x.DisplayName });
+                    table.UniqueConstraint("AK_Filter_RowId", x => x.RowId);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,6 +225,48 @@ namespace Viking.Server.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FilterDisplayColumn",
+                columns: table => new
+                {
+                    Company = table.Column<string>(nullable: false),
+                    TableName = table.Column<string>(nullable: false),
+                    DisplayName = table.Column<string>(nullable: false),
+                    ColumnPath = table.Column<string>(nullable: false),
+                    OrderNum = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilterDisplayColumn", x => new { x.Company, x.TableName, x.DisplayName, x.ColumnPath });
+                    table.ForeignKey(
+                        name: "FK_FilterDisplayColumn_Filter_Company_TableName_DisplayName",
+                        columns: x => new { x.Company, x.TableName, x.DisplayName },
+                        principalTable: "Filter",
+                        principalColumns: new[] { "Company", "TableName", "DisplayName" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FilterSortColumn",
+                columns: table => new
+                {
+                    Company = table.Column<string>(nullable: false),
+                    TableName = table.Column<string>(nullable: false),
+                    DisplayName = table.Column<string>(nullable: false),
+                    ColumnPath = table.Column<string>(nullable: false),
+                    IsAscending = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilterSortColumn", x => new { x.Company, x.TableName, x.DisplayName, x.ColumnPath });
+                    table.ForeignKey(
+                        name: "FK_FilterSortColumn_Filter_Company_TableName_DisplayName",
+                        columns: x => new { x.Company, x.TableName, x.DisplayName },
+                        principalTable: "Filter",
+                        principalColumns: new[] { "Company", "TableName", "DisplayName" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PurchaseOrderLine",
                 columns: table => new
                 {
@@ -291,6 +352,12 @@ namespace Viking.Server.API.Migrations
                 name: "Company");
 
             migrationBuilder.DropTable(
+                name: "FilterDisplayColumn");
+
+            migrationBuilder.DropTable(
+                name: "FilterSortColumn");
+
+            migrationBuilder.DropTable(
                 name: "Interaction");
 
             migrationBuilder.DropTable(
@@ -301,6 +368,9 @@ namespace Viking.Server.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Filter");
 
             migrationBuilder.DropTable(
                 name: "PurchaseOrder");
