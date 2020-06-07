@@ -13,12 +13,21 @@ namespace Viking.Client.Services
         /// </summary>
         /// <param name="serviceCollection"></param>
         /// <returns></returns>
-        public static IServiceCollection ConfigureDefaultClientServices(this IServiceCollection serviceCollection)
+        public static IServiceCollection ConfigureDefaultClientServices(this IServiceCollection services)
         {
             // Adds in the service built for clients to consume the API
-            serviceCollection.AddSingleton<IApplicationService, ApplicationService>();
+            services.AddSingleton<IApplicationService, ApplicationService>();
 
-            return serviceCollection;
+            // Adds in HttpClients
+            services.AddHttpClient(ApplicationService.ClientName, c =>
+            {
+                c.BaseAddress = new Uri("");
+            });
+
+
+
+
+            return services;
         }
 
         /// <summary>
@@ -39,5 +48,7 @@ namespace Viking.Client.Services
 
             return serviceCollection;
         }
+
+
     }
 }

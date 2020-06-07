@@ -1,4 +1,4 @@
-﻿namespace Viking.Services
+﻿namespace Viking.Client.Services
 {
     public interface IApplicationService
     {

@@ -4,7 +4,7 @@
 <select @attributes="Attributes" class="form-control" @bind="@Value">
     @if (items.Count() > 0)
     {
-        <option selected>@DefaultText</option>
+        <option selected value="">@DefaultText</option>
     }
 
     @foreach (var item in items)
@@ -21,21 +21,25 @@
     [Parameter] public Func<TItem, string> DisplayPath { get; set; }
     [Parameter] public Func<TItem, TValue> ValuePath { get; set; }
     [Parameter] public Func<IEnumerable<TItem>> ItemSource { get; set; }
-    [Parameter] public EventCallback<TValue> SelectionChanged { get; set; }
-    [Parameter] public TValue Value { get; set; }
+    [Parameter] public EventCallback<ChangeEventArgs<TValue>> SelectionChanged { get; set; }
+
+    private TValue _value;
+    [Parameter] 
+    public TValue Value
+    {
+        get => _value;
+        set
+        {
+            var changeArgs = new ChangeEventArgs<TValue>(_value, value);
+            _value = value;
+            SelectionChanged.InvokeAsync(changeArgs);
+        }
+    }
 
     private IEnumerable<TItem> items;
 
     protected override void OnInitialized()
     {
         items = ItemSource?.Invoke() ?? new List<TItem>();
-    }
-
-    private void Dropdown_SelectionChanged(ChangeEventArgs e)
-    {
-        if (e.Value is TValue tVal)
-        {
-            SelectionChanged.InvokeAsync(tVal);
-        }
     }
 }

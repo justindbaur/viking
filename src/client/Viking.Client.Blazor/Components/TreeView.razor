@@ -10,8 +10,8 @@
     <div>
         @if (hasChildren)
         {
-            <span class="uic-tree__icon" @onclick="@(() => OnToggleNode(node, !nodeExpanded))">
-                <i class="@(nodeExpanded ? "far fa-minus-square curosr-pointer" : "far fa-plus-square curosr-pointer")"></i>
+            <span class="uic-tree__icon " @onclick="@(() => OnToggleNode(node, !nodeExpanded))">
+                <span class="@(nodeExpanded ? "oi oi-chevron-bottom curosr-pointer" : "oi oi-chevron-right curosr-pointer")"></span>
             </span>
         }
 
@@ -47,7 +47,7 @@
     [Parameter] public IList<TNode> ExpandedNodes { get; set; } = new List<TNode>();
     [Parameter] public EventCallback<IList<TNode>> ExpandedNodesChanged { get; set; }
     [Parameter] public Func<TNode, bool> HasChildNodes { get; set; } = node => true;
-    [Parameter] public bool Visible { get; set; }
+    [Parameter] public bool Visible { get; set; } = true;
 
     private void OnToggleNode(TNode node, bool expand)
     {

@@ -71,6 +71,10 @@ namespace Viking.Server.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("error");
+            }
 
             app.UseHttpsRedirection();
 

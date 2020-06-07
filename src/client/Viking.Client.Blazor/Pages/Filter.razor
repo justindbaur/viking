@@ -1,5 +1,83 @@
-﻿<h3>Filter</h3>
+﻿@page "/filter"
+@using System.Diagnostics
+
+<h3>Filter</h3>
+<div class="form-row">
+    <div class="col form-group">
+        <label for="tableDropdown">Table</label>
+        <DropdownList TItem="string"
+                      TValue="string"
+                      ItemSource="@(() => FillDropdown())"
+                      DisplayPath="(i => i)"
+                      ValuePath="(i => i)"
+                      Value="@("Item 1")"
+                      id="tableDropdown" />
+    </div>
+    <div class="col form-group">
+        <label for="filterName">Filter Name</label>
+        <input type="text" class="form-control" id="filterName" />
+    </div>
+</div>
+<div>
+    <TreeView TNode="Item" ChildSelector="@(item => item.Nodes)" Nodes="TreeItems" HasChildNodes="@(item => item.Nodes?.Any() == true)">
+        <TitleTemplate>@context.Text</TitleTemplate>
+    </TreeView>
+    <br />
+    <br />
+    <ActionWrapper OnClick="@(() => Debug.WriteLine("On Click Fired"))" OnDoubleClick="@(() => Debug.WriteLine("On Double Click Fired"))" OnRightClick="@(() => Debug.WriteLine("On Right Click Fired"))">
+        <h2>Action Wrapper here</h2>
+    </ActionWrapper>
+</div>
 
 @code {
 
+    public class Item
+    {
+        public Item(string text)
+        {
+            Text = text;
+        }
+
+        public string Text { get; }
+        public IEnumerable<Item> Nodes { get; set; } = new List<Item>();
+    }
+
+    //IList<Item> ExpandedNodes = new List<Item>();
+    //Item selectedNode;
+
+    public IEnumerable<string> FillDropdown()
+    {
+        // TODO: Get actual tables
+        return new List<string>()
+    {
+            "Item 1",
+            "Item 2"
+        };
+    }
+
+    IEnumerable<Item> TreeItems = new[]
+    {
+        new Item("Item 1")
+        {
+            Nodes = new []
+        {
+                new Item("Item 1.1"),
+                new Item("Item 1.2")
+            }
+        },
+        new Item("Item 2")
+        {
+            Nodes = new []
+        {
+                new Item("Item 2.1")
+                {
+                    Nodes = new []
+                    {
+                        new Item("Item 2.1.1")
+                    }
+                }
+            }
+        },
+        new Item("Item 3")
+    };
 }
