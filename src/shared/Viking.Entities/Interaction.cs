@@ -11,7 +11,7 @@ namespace Viking.Entities
         CloseItem
     }
 
-    public sealed class Interaction : EntityBase
+    public class Interaction : EntityBase
     {
         public DateTime Time { get; set; }
         public InteractionType Type { get; set; }
