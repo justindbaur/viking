@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,15 +15,23 @@ namespace Viking.Client.Services
         /// </summary>
         /// <param name="serviceCollection"></param>
         /// <returns></returns>
-        public static IServiceCollection ConfigureDefaultClientServices(this IServiceCollection services)
+        public static IServiceCollection ConfigureDefaultClientServices(this IServiceCollection services, ClientConfig appConfig)
         {
+            if (appConfig.BaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(appConfig.BaseUrl));
+            }
+
             // Adds in the service built for clients to consume the API
             services.AddSingleton<IApplicationService, ApplicationService>();
+
+
+            var baseUri = new Uri(appConfig.BaseUrl);
 
             // Adds in HttpClients
             services.AddHttpClient(ApplicationService.ClientName, c =>
             {
-                c.BaseAddress = new Uri("");
+                c.BaseAddress = baseUri;
             });
 
 
@@ -48,7 +58,5 @@ namespace Viking.Client.Services
 
             return serviceCollection;
         }
-
-
     }
 }

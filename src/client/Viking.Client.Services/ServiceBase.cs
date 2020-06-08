@@ -21,7 +21,7 @@ namespace Viking.Client.Services
 
             serializerOptions = new JsonSerializerOptions
             {
-                PropertyNameCaseInsensitive = true
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
         }
 
@@ -50,6 +50,11 @@ namespace Viking.Client.Services
         protected Task<T> GetAsync<T>(string? requestUri, CancellationToken cancellationToken = default)
         {
             return Client.GetFromJsonAsync<T>(requestUri, cancellationToken);
+        }
+
+        protected Task<IEnumerable<T>> GetListAsync<T>(string? requestUri, CancellationToken cancellationToken = default)
+        {
+            return Client.GetFromJsonAsync<IEnumerable<T>>(requestUri, serializerOptions, cancellationToken);
         }
 
         private async Task<T> HandleResponseAsync<T>(HttpResponseMessage response, CancellationToken cancellationToken = default)

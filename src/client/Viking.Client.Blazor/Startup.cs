@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Viking.Client.Blazor.Data;
+using Viking.Client.Services;
 
 namespace Viking.Client.Blazor
 {
@@ -28,7 +29,8 @@ namespace Viking.Client.Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+            services.ConfigureDefaultClientServices(Configuration.GetSection(nameof(ClientConfig)).Get<ClientConfig>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

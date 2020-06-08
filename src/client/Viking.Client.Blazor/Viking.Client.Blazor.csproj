@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Viking.Client.Services\Viking.Client.Services.csproj" />
+  </ItemGroup>
+
 </Project>

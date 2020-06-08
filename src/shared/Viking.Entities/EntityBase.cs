@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Viking.Entities
 {
-    public class EntityBase
+    public abstract class EntityBase
     {
         public Guid RowId { get; set; }
     }

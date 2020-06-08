@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Viking.Entities
 {
-    public class Company : AuditableEntity
+    public sealed class Company : AuditableEntity
     {
         [Key]
         public string Name { get; set; }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Viking.Entities
 {
-    public class Filter : AuditableEntity
+    public sealed class Filter : AuditableEntity
     {
         public string Company { get; set; }
         public string TableName { get; set; }
