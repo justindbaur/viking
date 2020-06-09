@@ -1,0 +1,17 @@
+﻿@typeparam TItem
+@typeparam TValue
+
+<select @attributes="Attributes" class="form-control" @bind="@Value">
+    @if (items.Count() > 0)
+    {
+        <option selected value="">@DefaultText</option>
+    }
+
+    @foreach (var item in items)
+    {
+        var display = DisplayPath.Invoke(item);
+        var value = ValuePath.Invoke(item);
+
+        <option value="@value">@display</option>
+    }
+</select>

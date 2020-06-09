@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Viking.Client.Blazor.Common
+namespace Viking.Client.Blazor.Components.Shared
 {
     public class ChangeEventArgs<T>
     {

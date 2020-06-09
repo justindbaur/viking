@@ -19,14 +19,20 @@
     </div>
 </div>
 <div>
-    <TreeView TNode="Item" ChildSelector="@(item => item.Nodes)" Nodes="TreeItems" HasChildNodes="@(item => item.Nodes?.Any() == true)">
-        <TitleTemplate>@context.Text</TitleTemplate>
-    </TreeView>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <TreeView TNode="Item" ChildSelector="@(item => item.Nodes)" Nodes="TreeItems" HasChildNodes="@(item => item.Nodes?.Any() == true)">
+                    <TitleTemplate>@context.Text</TitleTemplate>
+                </TreeView>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+    
     <br />
-    <br />
-    <ActionWrapper OnClick="@(() => Debug.WriteLine("On Click Fired"))" OnDoubleClick="@(() => Debug.WriteLine("On Double Click Fired"))" OnRightClick="@(() => Debug.WriteLine("On Right Click Fired"))">
-        <h2>Action Wrapper here</h2>
-    </ActionWrapper>
 </div>
 
 @code {

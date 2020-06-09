@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Viking.Client.Blazor.Components\Viking.Client.Blazor.Components.csproj" />
     <ProjectReference Include="..\Viking.Client.Services\Viking.Client.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>

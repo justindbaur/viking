@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viking.Server.Services", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viking.Client.Blazor", "client\Viking.Client.Blazor\Viking.Client.Blazor.csproj", "{1E81993C-A704-4C1D-8BBB-93942BCD8A5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viking.Client.Blazor.Components", "client\Viking.Client.Blazor.Components\Viking.Client.Blazor.Components.csproj", "{31007EC6-926F-4785-847A-75B311897314}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -232,6 +234,26 @@ Global
 		{1E81993C-A704-4C1D-8BBB-93942BCD8A5F}.Release|x64.Build.0 = Release|Any CPU
 		{1E81993C-A704-4C1D-8BBB-93942BCD8A5F}.Release|x86.ActiveCfg = Release|Any CPU
 		{1E81993C-A704-4C1D-8BBB-93942BCD8A5F}.Release|x86.Build.0 = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|ARM.Build.0 = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|x64.Build.0 = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Debug|x86.Build.0 = Debug|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|ARM.ActiveCfg = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|ARM.Build.0 = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|ARM64.Build.0 = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|x64.ActiveCfg = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|x64.Build.0 = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|x86.ActiveCfg = Release|Any CPU
+		{31007EC6-926F-4785-847A-75B311897314}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -246,6 +268,7 @@ Global
 		{9549B202-1B6F-437E-8C9D-B00905B40319} = {C1D302E8-EB33-4C9D-B98F-8B511982E45A}
 		{9D2AE955-F3E3-417F-8C6B-E0F3806AC363} = {36FACFD3-AFAC-4F05-88E4-701FE5215B68}
 		{1E81993C-A704-4C1D-8BBB-93942BCD8A5F} = {9FFED62C-DFD0-48DE-9F86-E507E571DFFE}
+		{31007EC6-926F-4785-847A-75B311897314} = {9FFED62C-DFD0-48DE-9F86-E507E571DFFE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC20F00C-572F-41BC-8047-9B77E075CFFF}

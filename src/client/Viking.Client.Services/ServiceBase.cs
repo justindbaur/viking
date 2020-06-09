@@ -13,13 +13,13 @@ namespace Viking.Client.Services
     public abstract class ServiceBase
     {
         protected HttpClient Client { get; }
-        private readonly JsonSerializerOptions serializerOptions;
+        private readonly JsonSerializerOptions options;
 
         public ServiceBase(HttpClient client)
         {
             Client = client;
 
-            serializerOptions = new JsonSerializerOptions
+            options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
@@ -27,23 +27,23 @@ namespace Viking.Client.Services
 
         protected async Task ExecuteAsync<T>(string? requestUri, T value, CancellationToken cancellationToken = default)
         {
-            await Client.PostAsJsonAsync(requestUri, value, serializerOptions, cancellationToken);
+            await Client.PostAsJsonAsync(requestUri, value, options, cancellationToken);
         }
 
         protected async Task<TResponse> ExecuteAsync<T, TResponse>(string? requestUri, T value, CancellationToken cancellationToken = default)
         {
-            var response = await Client.PostAsJsonAsync(requestUri, value, serializerOptions, cancellationToken);
+            var response = await Client.PostAsJsonAsync(requestUri, value, options, cancellationToken);
             return await HandleResponseAsync<TResponse>(response, cancellationToken);
         }
 
         protected async Task UpdateAsync<T>(string? requestUri, T value, CancellationToken cancellationToken = default)
         {
-            await Client.PutAsJsonAsync(requestUri, value, serializerOptions, cancellationToken);
+            await Client.PutAsJsonAsync(requestUri, value, options, cancellationToken);
         }
 
         protected async Task<TResponse> UpdateAsync<T, TResponse>(string requestUri, T value, CancellationToken cancellationToken = default)
         {
-            var response = await Client.PutAsJsonAsync(requestUri, value, serializerOptions, cancellationToken);
+            var response = await Client.PutAsJsonAsync(requestUri, value, options, cancellationToken);
             return await HandleResponseAsync<TResponse>(response, cancellationToken);
         }
 
@@ -54,12 +54,12 @@ namespace Viking.Client.Services
 
         protected Task<IEnumerable<T>> GetListAsync<T>(string? requestUri, CancellationToken cancellationToken = default)
         {
-            return Client.GetFromJsonAsync<IEnumerable<T>>(requestUri, serializerOptions, cancellationToken);
+            return Client.GetFromJsonAsync<IEnumerable<T>>(requestUri, options, cancellationToken);
         }
 
         private async Task<T> HandleResponseAsync<T>(HttpResponseMessage response, CancellationToken cancellationToken = default)
         {
-            return await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), serializerOptions, cancellationToken);
+            return await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), options, cancellationToken);
         }
     }
 }
