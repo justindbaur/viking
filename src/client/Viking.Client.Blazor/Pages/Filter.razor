@@ -5,7 +5,7 @@
 <div class="form-row">
     <div class="col form-group">
         <label for="tableDropdown">Table</label>
-        <DropdownList TItem="string"
+        <DropDownList TItem="string"
                       TValue="string"
                       ItemSource="@(() => FillDropdown())"
                       DisplayPath="(i => i)"
@@ -27,7 +27,14 @@
                 </TreeView>
             </div>
             <div class="col">
-
+                <TabView>
+                    <Tab Title="Display Column">
+                        <h3>Display</h3>
+                    </Tab>
+                    <Tab Title="Sort Column">
+                        <h3>Sort</h3>
+                    </Tab>
+                </TabView>
             </div>
         </div>
     </div>

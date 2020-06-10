@@ -32,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viking.Server.Services", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viking.Client.Blazor", "client\Viking.Client.Blazor\Viking.Client.Blazor.csproj", "{1E81993C-A704-4C1D-8BBB-93942BCD8A5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Viking.Client.Blazor.Components", "client\Viking.Client.Blazor.Components\Viking.Client.Blazor.Components.csproj", "{31007EC6-926F-4785-847A-75B311897314}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Viking.Client.Blazor.Components", "client\Viking.Client.Blazor.Components\Viking.Client.Blazor.Components.csproj", "{31007EC6-926F-4785-847A-75B311897314}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
