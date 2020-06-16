@@ -33,17 +33,13 @@ namespace Viking.Server.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options =>
+            services.AddControllers(config =>
             {
-                options.EnableEndpointRouting = false;
-            });
+                config.ReturnHttpNotAcceptable = true;
+            }).AddXmlSerializerFormatters();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
+            
 
-            //services.AddOData();
 
             services.AddDbContext<ApplicationContext>(options =>
             {
@@ -62,6 +58,12 @@ namespace Viking.Server.API
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddUserManager<UserManager<IdentityUser>>()
                 .AddSignInManager<SignInManager<IdentityUser>>();
+
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,12 +73,8 @@ namespace Viking.Server.API
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("error");
-            }
 
-            app.UseHttpsRedirection();
+            app.UseRouting();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -84,18 +82,18 @@ namespace Viking.Server.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            app.UseRouting();
-
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            //var odataBuilder = app.ConfigureOData();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.Select().Filter().OrderBy().Expand().Count().MaxTop(null);
-            //    endpoints.MapODataRoute("ODataRoute", "odata", odataBuilder.GetEdmModel());
-            //});
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=name}/{action=Index}/{id?}");
+            });
         }
     }
 }

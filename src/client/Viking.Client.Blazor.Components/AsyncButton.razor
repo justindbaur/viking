@@ -1,0 +1,11 @@
+﻿<button @attributes="Attributes" @onclick="InternalOnClick" disabled="@isActionRunning" type="button">
+    @if (isActionRunning)
+    {
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        @LoadingText
+    }
+    else
+    {
+        @Text
+    }
+</button>
